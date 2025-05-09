@@ -1,6 +1,3 @@
-# OsintTeleBot
-Osint Telegram Bot 
-
 OSINT Telegram Bot 🔍
 
 Telegram-бот для работы с OSINT-разведкой, хранения и анализа данных из утечек (слитые базы, дампы, соцсети).
@@ -78,23 +75,25 @@ go run ./cmd/bot/main.go
 📂 Структура проекта
 bash
 
-/osint-bot  
-├── cmd                 # Точки входа  
-├── internal            # Основная логика  
-│   ├── app             # Ядро приложения  
-│   │   ├── repositories  # Работа с БД  
-│   │   ├── services     # Бизнес-логика  
-│   │   └── models      # Сущности (Person, Email и т.д.)  
-│   ├── transport       # Внешние интерфейсы  
-│   │   ├── telegram    # Обработчики Telegram  
-│   │   └── http        # (Опционально) Веб-API  
-│   └── config          # Конфигурация  
-├── pkg                 # Общие модули  
-│   ├── logger          # Логирование  
-│   └── database        # Инициализация БД  
-├── migrations          # SQL-миграции  
-├── scripts             # Парсинг дампов  
-└── .env.example        # Шаблон .env  
+osint-bot/
+├── cmd/                  # Точки входа
+├── internal/             # Основная бизнес-логика
+│   ├── app/              # Ядро приложения
+│   │   ├── errors/       # Кастомные ошибки
+│   │   ├── models/       # Сущности данных
+│   │   ├── repositories/ # Слой работы с БД
+│   │   └── services/     # Бизнес-логика
+│   ├── config/           # Конфигурация
+│   └── transport/        # Внешние интерфейсы
+│       ├── telegram/     # Telegram handlers
+│       └── http/         # REST API (optional)
+├── pkg/                  # Общие утилиты
+│   ├── database/         # Инициализация БД
+│   ├── errorhandler/     # Обработка ошибок
+│   └── logger/           # Логирование
+├── migrations/           # SQL миграции
+├── scripts/              # Вспомогательные скрипты
+└── .env.example          # Шаблон конфигурации
 
 🛠 Команды бота
 
