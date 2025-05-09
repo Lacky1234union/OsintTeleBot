@@ -1,6 +1,7 @@
 package models
 
 import (
+	"strings"
 	"time"
 
 	"github.com/Lacky1234union/OsintTeleBot/internal/share/errs"
@@ -24,7 +25,7 @@ type Email struct {
 
 type Phone struct {
 	ID      uuid.UUID
-	Phone   int
+	Phone   string
 	Created time.Time
 }
 
@@ -89,17 +90,35 @@ func NewNickName(id uuid.UUID, nick string) (NickName, error) {
 }
 
 func (p *Phone) Validate() error {
-	if p.ID == uuid.Nil || p.Phone <= 0 {
-		return errs.ErrBadData
+	if p.ID == uuid.Nil {
+		return errs.ErrBadData.Msg("invalid phone ID")
 	}
+
+	phone := strings.TrimSpace(p.Phone)
+	if phone == "" {
+		return errs.ErrBadData.Msg("phone number cannot be empty")
+	}
+
+	// Remove any non-digit characters for length validation
+	digitsOnly := strings.Map(func(r rune) rune {
+		if r >= '0' && r <= '9' {
+			return r
+		}
+		return -1
+	}, phone)
+
+	if len(digitsOnly) < 10 || len(digitsOnly) > 15 {
+		return errs.ErrBadData.Msg("invalid phone number format: must be between 10 and 15 digits")
+	}
+
 	return nil
 }
 
-func NewPhone(id uuid.UUID, phone int) (Phone, error) {
+func NewPhone(id uuid.UUID, phone string) (Phone, error) {
 	number := Phone{
-		id,
-		phone,
-		time.Now(),
+		ID:      id,
+		Phone:   phone,
+		Created: time.Now(),
 	}
 	return number, number.Validate()
 }
