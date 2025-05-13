@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Person Service</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+        form { margin-bottom: 20px; background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        input, button { margin: 5px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        button { background-color: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #218838; }
+        #result { margin-top: 20px; background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <h1>Person Service</h1>
+    <form id="personForm">
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="tel" id="phone" placeholder="Phone" required>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('personForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            // Send data to the backend
+            fetch('/api/person', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, phone }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = `
+                    <h2>Submitted Data:</h2>
+                    <p>Name: ${data.name}</p>
+                    <p>Email: ${data.email}</p>
+                    <p>Phone: ${data.phone}</p>
+                `;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = '<h2>Error submitting data</h2>';
+            });
+        });
+    </script>
+</body>
+</html>
