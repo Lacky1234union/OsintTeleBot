@@ -7,17 +7,28 @@ import (
 	"github.com/Lacky1234union/OsintTeleBot/internal/app/models"
 	"github.com/Lacky1234union/OsintTeleBot/internal/share/errs"
 	"github.com/Lacky1234union/OsintTeleBot/internal/share/loger"
-	"github.com/jmoiron/sqlx"
 )
 
 var dbLogger = loger.New("person_repository")
 
-type PersonRepository struct {
-	db *sqlx.DB
+// DB is an interface that defines the database operations we need
+type DB interface {
+	ExecContext(ctx context.Context, query string, args ...interface{}) (sql.Result, error)
+	QueryRowContext(ctx context.Context, query string, args ...interface{}) *sql.Row
+	GetContext(ctx context.Context, dest interface{}, query string, args ...interface{}) error
+	SelectContext(ctx context.Context, dest interface{}, query string, args ...interface{}) error
 }
 
-func NewRepository(db *sqlx.DB) *PersonRepository {
-	return &PersonRepository{db: db}
+// PersonRepository handles database operations for persons
+type PersonRepository struct {
+	db DB
+}
+
+// NewPersonRepository creates a new PersonRepository instance
+func NewPersonRepository(db DB) *PersonRepository {
+	return &PersonRepository{
+		db: db,
+	}
 }
 
 func (r *PersonRepository) Create(ctx context.Context, person models.Person) error {
