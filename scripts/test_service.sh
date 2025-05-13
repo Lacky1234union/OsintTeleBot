@@ -1,0 +1,1 @@
+go test ./internal/app/services -v

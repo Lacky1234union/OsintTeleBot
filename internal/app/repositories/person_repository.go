@@ -19,19 +19,27 @@ type DB interface {
 	SelectContext(ctx context.Context, dest interface{}, query string, args ...interface{}) error
 }
 
-// PersonRepository handles database operations for persons
-type PersonRepository struct {
+// PersonRepository defines the interface for person repository operations
+type PersonRepository interface {
+	Create(ctx context.Context, person models.Person) error
+	FindByName(ctx context.Context, name string) (models.Person, error)
+	FindByPhone(ctx context.Context, phone string) (models.Person, error)
+	FindByEmail(ctx context.Context, email string) (models.Person, error)
+}
+
+// personRepository implements PersonRepository interface
+type personRepository struct {
 	db DB
 }
 
 // NewPersonRepository creates a new PersonRepository instance
-func NewPersonRepository(db DB) *PersonRepository {
-	return &PersonRepository{
+func NewPersonRepository(db DB) PersonRepository {
+	return &personRepository{
 		db: db,
 	}
 }
 
-func (r *PersonRepository) Create(ctx context.Context, person models.Person) error {
+func (r *personRepository) Create(ctx context.Context, person models.Person) error {
 	if ctx == nil {
 		dbLogger.WithContext(ctx).Warn("nil context in Create")
 		return errs.ErrNilContext
@@ -48,7 +56,7 @@ func (r *PersonRepository) Create(ctx context.Context, person models.Person) err
 	return nil
 }
 
-func (r *PersonRepository) FindByName(ctx context.Context, name string) (models.Person, error) {
+func (r *personRepository) FindByName(ctx context.Context, name string) (models.Person, error) {
 	if ctx == nil {
 		dbLogger.WithContext(ctx).Warn("nil context in FindByName")
 		return models.Person{}, errs.ErrNilContext
@@ -68,7 +76,7 @@ func (r *PersonRepository) FindByName(ctx context.Context, name string) (models.
 	return pers, nil
 }
 
-func (r *PersonRepository) FindByPhone(ctx context.Context, phone string) (models.Person, error) {
+func (r *personRepository) FindByPhone(ctx context.Context, phone string) (models.Person, error) {
 	if ctx == nil {
 		dbLogger.WithContext(ctx).Warn("nil context in FindByPhone")
 		return models.Person{}, errs.ErrNilContext
@@ -100,7 +108,7 @@ func (r *PersonRepository) FindByPhone(ctx context.Context, phone string) (model
 	return pers, nil
 }
 
-func (r *PersonRepository) FindByEmail(ctx context.Context, email string) (models.Person, error) {
+func (r *personRepository) FindByEmail(ctx context.Context, email string) (models.Person, error) {
 	if ctx == nil {
 		dbLogger.WithContext(ctx).Warn("nil context in FindByEmail")
 		return models.Person{}, errs.ErrNilContext
