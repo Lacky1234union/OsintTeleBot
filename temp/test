@@ -1,0 +1,104 @@
+=== RUN   TestRegisterUser
+=== RUN   TestRegisterUser/successful_registration
+    person_service_test.go:101: PASS:	Create(string,string)
+=== RUN   TestRegisterUser/invalid_user_data
+=== RUN   TestRegisterUser/repository_error
+    person_service_test.go:101: PASS:	Create(string,string)
+--- PASS: TestRegisterUser (0.00s)
+    --- PASS: TestRegisterUser/successful_registration (0.00s)
+    --- PASS: TestRegisterUser/invalid_user_data (0.00s)
+    --- PASS: TestRegisterUser/repository_error (0.00s)
+=== RUN   TestFindUserByEmail
+=== RUN   TestFindUserByEmail/successful_find
+    person_service_test.go:161: PASS:	FindByEmail(string,string)
+=== RUN   TestFindUserByEmail/empty_email
+    person_service_test.go:157: 
+        	Error Trace:	person_service_test.go:157
+        	Error:      	Target error should be in err chain:
+        	            	expected: "error: bad input data"
+        	            	in chain: "error: email cannot be empty"
+        	Test:       	TestFindUserByEmail/empty_email
+=== RUN   TestFindUserByEmail/whitespace_email
+    person_service_test.go:157: 
+        	Error Trace:	person_service_test.go:157
+        	Error:      	Target error should be in err chain:
+        	            	expected: "error: bad input data"
+        	            	in chain: "error: email cannot be empty"
+        	Test:       	TestFindUserByEmail/whitespace_email
+=== RUN   TestFindUserByEmail/not_found
+    person_service_test.go:161: PASS:	FindByEmail(string,string)
+--- FAIL: TestFindUserByEmail (0.00s)
+    --- PASS: TestFindUserByEmail/successful_find (0.00s)
+    --- FAIL: TestFindUserByEmail/empty_email (0.00s)
+    --- FAIL: TestFindUserByEmail/whitespace_email (0.00s)
+    --- PASS: TestFindUserByEmail/not_found (0.00s)
+=== RUN   TestFindUserByName
+=== RUN   TestFindUserByName/successful_find
+    person_service_test.go:221: PASS:	FindByName(string,string)
+=== RUN   TestFindUserByName/empty_name
+    person_service_test.go:217: 
+        	Error Trace:	person_service_test.go:217
+        	Error:      	Target error should be in err chain:
+        	            	expected: "error: bad input data"
+        	            	in chain: "error: name cannot be empty"
+        	Test:       	TestFindUserByName/empty_name
+=== RUN   TestFindUserByName/whitespace_name
+    person_service_test.go:217: 
+        	Error Trace:	person_service_test.go:217
+        	Error:      	Target error should be in err chain:
+        	            	expected: "error: bad input data"
+        	            	in chain: "error: name cannot be empty"
+        	Test:       	TestFindUserByName/whitespace_name
+=== RUN   TestFindUserByName/not_found
+    person_service_test.go:221: PASS:	FindByName(string,string)
+--- FAIL: TestFindUserByName (0.00s)
+    --- PASS: TestFindUserByName/successful_find (0.00s)
+    --- FAIL: TestFindUserByName/empty_name (0.00s)
+    --- FAIL: TestFindUserByName/whitespace_name (0.00s)
+    --- PASS: TestFindUserByName/not_found (0.00s)
+=== RUN   TestFindUserByPhone
+=== RUN   TestFindUserByPhone/successful_find
+    person_service_test.go:279: 
+        	Error Trace:	person_service_test.go:279
+        	Error:      	Received unexpected error:
+        	            	error: invalid phone ID
+        	Test:       	TestFindUserByPhone/successful_find
+    person_service_test.go:281: FAIL:	FindByPhone(string,string)
+        		at: [person_service_test.go:237 person_service_test.go:272]
+    person_service_test.go:281: FAIL: 0 out of 1 expectation(s) were met.
+        	The code you are testing needs to make 1 more call(s).
+        	at: [person_service_test.go:281]
+=== RUN   TestFindUserByPhone/invalid_phone_format
+    person_service_test.go:277: 
+        	Error Trace:	person_service_test.go:277
+        	Error:      	Target error should be in err chain:
+        	            	expected: "error: bad input data"
+        	            	in chain: "error: invalid phone ID"
+        	Test:       	TestFindUserByPhone/invalid_phone_format
+=== RUN   TestFindUserByPhone/empty_phone
+    person_service_test.go:277: 
+        	Error Trace:	person_service_test.go:277
+        	Error:      	Target error should be in err chain:
+        	            	expected: "error: bad input data"
+        	            	in chain: "error: invalid phone ID"
+        	Test:       	TestFindUserByPhone/empty_phone
+=== RUN   TestFindUserByPhone/not_found
+    person_service_test.go:277: 
+        	Error Trace:	person_service_test.go:277
+        	Error:      	Target error should be in err chain:
+        	            	expected: "error: phone not found"
+        	            	in chain: "error: invalid phone ID"
+        	Test:       	TestFindUserByPhone/not_found
+    person_service_test.go:281: FAIL:	FindByPhone(string,string)
+        		at: [person_service_test.go:263 person_service_test.go:272]
+    person_service_test.go:281: FAIL: 0 out of 1 expectation(s) were met.
+        	The code you are testing needs to make 1 more call(s).
+        	at: [person_service_test.go:281]
+--- FAIL: TestFindUserByPhone (0.00s)
+    --- FAIL: TestFindUserByPhone/successful_find (0.00s)
+    --- FAIL: TestFindUserByPhone/invalid_phone_format (0.00s)
+    --- FAIL: TestFindUserByPhone/empty_phone (0.00s)
+    --- FAIL: TestFindUserByPhone/not_found (0.00s)
+FAIL
+FAIL	github.com/Lacky1234union/OsintTeleBot/internal/app/services	0.007s
+FAIL
