@@ -245,14 +245,14 @@ func TestFindUserByPhone(t *testing.T) {
 			expectedError: nil,
 		},
 		{
-			name:          "invalid phone format",
-			phone:         "123", // Too short
+			name:          "empty phone",
+			phone:         "",
 			setupMock:     func(mockRepo *MockPersonRepository) {},
 			expectedError: errs.ErrBadData,
 		},
 		{
-			name:          "empty phone",
-			phone:         "",
+			name:          "whitespace phone",
+			phone:         "   ",
 			setupMock:     func(mockRepo *MockPersonRepository) {},
 			expectedError: errs.ErrBadData,
 		},

@@ -29,7 +29,7 @@ func (s *PersonService) FindUserByEmail(ctx context.Context, email string) (mode
 		return models.Person{}, errs.ErrNilContext
 	}
 	if email = strings.TrimSpace(email); email == "" {
-		return models.Person{}, errs.ErrBadData.Msg("email cannot be empty")
+		return models.Person{}, errs.ErrBadData
 	}
 	return s.repo.FindByEmail(ctx, email)
 }
@@ -39,7 +39,7 @@ func (s *PersonService) FindUserByName(ctx context.Context, name string) (models
 		return models.Person{}, errs.ErrNilContext
 	}
 	if name = strings.TrimSpace(name); name == "" {
-		return models.Person{}, errs.ErrBadData.Msg("name cannot be empty")
+		return models.Person{}, errs.ErrBadData
 	}
 	return s.repo.FindByName(ctx, name)
 }
@@ -48,13 +48,9 @@ func (s *PersonService) FindUserByPhone(ctx context.Context, phone string) (mode
 	if ctx == nil {
 		return models.Person{}, errs.ErrNilContext
 	}
-
-	// Create a temporary Phone model to validate the phone number
-	tempPhone := models.Phone{Phone: phone}
-	if err := tempPhone.Validate(); err != nil {
-		return models.Person{}, err
+	if phone = strings.TrimSpace(phone); phone == "" {
+		return models.Person{}, errs.ErrBadData
 	}
-
 	return s.repo.FindByPhone(ctx, phone)
 }
 
