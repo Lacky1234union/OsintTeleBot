@@ -1,0 +1,1 @@
+psql -U postgres -d osint_test -f ../internal/app/repositories/testdata/ip_test_data.sql
