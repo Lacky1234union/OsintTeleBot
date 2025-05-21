@@ -34,13 +34,8 @@ COPY --from=builder /app/main .
 # Copy any additional required files (like configs, migrations, etc.)
 COPY --from=builder /app/migrations ./migrations
 
-# Set environment variables
+# Set timezone
 ENV TZ=UTC
-ENV DB_HOST=host.docker.internal
-ENV DB_PORT=5432
-ENV DB_USER=postgres
-ENV DB_PASSWORD=password
-ENV DB_NAME=appdb
 
 # Expose the application port
 EXPOSE 8080
