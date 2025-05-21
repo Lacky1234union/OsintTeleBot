@@ -139,3 +139,35 @@ func (r *personRepository) FindByEmail(ctx context.Context, email string) (model
 	}
 	return pers, nil
 }
+
+func (r *personRepository) FindByNick(ctx context.Context, nick string) (models.Person, error) {
+	if ctx == nil {
+		dbLogger.WithContext(ctx).Warn("nil context in FindByNick")
+		return models.Person{}, errs.ErrNilContext
+	}
+	var pers models.Person
+	row := r.db.QueryRowContext(ctx, "SELECT id FROM nicks WHERE nick = ?", nick)
+	err := row.Scan(&pers.ID)
+	if err != nil {
+		logEntry := dbLogger.WithContext(ctx).WithField("nick", nick).WithError(err)
+		if err == sql.ErrNoRows {
+			logEntry.Warn("nick not found")
+			return models.Person{}, errs.ErrNickNotFound
+		}
+		logEntry.Warn("error scanning nick")
+		return models.Person{}, errs.ErrDatabaseScan.Err(err)
+	}
+
+	row = r.db.QueryRowContext(ctx, "SELECT * FROM persons WHERE id = ?", pers.ID)
+	err = row.Scan(&pers.ID, &pers.Name, &pers.BirthDay, &pers.Created, &pers.Edited)
+	if err != nil {
+		logEntry := dbLogger.WithContext(ctx).WithField("person_id", pers.ID).WithError(err)
+		if err == sql.ErrNoRows {
+			logEntry.Warn("person not found by nick")
+			return models.Person{}, errs.ErrPersonNotFound
+		}
+		logEntry.Warn("error scanning person by nick")
+		return models.Person{}, errs.ErrDatabaseScan.Err(err)
+	}
+	return pers, nil
+}

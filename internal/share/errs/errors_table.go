@@ -18,4 +18,5 @@ var (
 	ErrPersonInvalidData = New("invalid person data")
 	ErrEmailNotFound     = New("email not found")
 	ErrPhoneNotFound     = New("phone not found")
+	ErrNickNotFound      = New("nick not found")
 )

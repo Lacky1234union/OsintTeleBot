@@ -55,3 +55,14 @@ func (s *PersonService) FindUserByPhone(ctx context.Context, phone string) (mode
 }
 
 // Другие сервисные методы...
+func (s *PersonService) FindUserByNick(ctx context.Context, phone string) (models.Person, error) {
+	if ctx == nil {
+		return models.Person{}, errs.ErrNilContext
+	}
+	if phone = strings.TrimSpace(phone); phone == "" {
+		return models.Person{}, errs.ErrBadData
+	}
+	return s.repo.FindByPhone(ctx, phone)
+}
+
+// Другие сервисные методы...
