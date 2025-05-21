@@ -35,6 +35,12 @@ type NickName struct {
 	Created  time.Time
 }
 
+type IPadress struct {
+	ID     uuid.UUID
+	IPtype string
+	IP     string
+}
+
 func (p *Person) Validate() error {
 	if p.ID == uuid.Nil || p.Name == "" || p.BirthDay.Unix() > time.Now().Unix() {
 		return errs.ErrBadData
