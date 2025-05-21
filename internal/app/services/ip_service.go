@@ -6,7 +6,7 @@ import (
 	"net"
 	"time"
 
-	"OsintTeleBot/internal/app/repositories"
+	"github.com/Lacky1234union/OsintTeleBot/internal/app/repositories"
 )
 
 // IPService defines the interface for IP-related business logic

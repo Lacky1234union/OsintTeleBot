@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"OsintTeleBot/internal/app/services"
+	"github.com/Lacky1234union/OsintTeleBot/internal/app/services"
 )
 
 // IPHandler handles HTTP requests for IP-related operations
