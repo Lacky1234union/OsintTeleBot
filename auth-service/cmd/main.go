@@ -1,13 +1,12 @@
 package main
 
 import (
-	"log"
-	"net/http"
-	"os"
-
 	"auth-service/internal/app"
 	"auth-service/internal/domain"
 	"auth-service/internal/interfaces/http"
+	"log"
+	"net/http"
+	"os"
 )
 
 func main() {
